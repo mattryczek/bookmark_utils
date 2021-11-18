@@ -3,6 +3,7 @@ import sys, json
 
 INDENT_LEVEL = 3
 INDENT = ' ' * INDENT_LEVEL
+TEST = set()
 
 def folder_walk(folder, level):
     count = 0
@@ -11,14 +12,15 @@ def folder_walk(folder, level):
         if child['typeCode'] == 1:
             count = count + 1
 
-    print(f"{INDENT * level} 📂 {folder['title']} [{count}]")
+    print(f"{INDENT * level}📂 {folder['title']} [{count}]")
 
     for child in folder['children']:
-        # if child['typeCode'] == 1:
+        if child['typeCode'] == 1:
+            TEST.add(child['uri'])
         #     print(f"{INDENT * (level + 1)} {child['title']}")
 
         if child['typeCode'] == 2:
-            folder_walk(child, level + 1)
+            count = count + folder_walk(child, level + 1)
 
     return count
 
@@ -37,7 +39,6 @@ def main():
 
     data = json.load(f)
     total_bookmarks = 0
-    total_duplicates = 0
     folders = data['children']
 
     print(f"💼 {filename}:")
@@ -51,8 +52,10 @@ def main():
             pass
 
     print()
-    print(f"[INFO] File containts {total_bookmarks} total bookmarks")
+    print(f"[INFO] File contains {total_bookmarks} total bookmarks")
+    print(f"[INFO] File contains {total_bookmarks - len(TEST)} duplicate bookmarks")
     print()
+
 
 if __name__ == "__main__":
     main()
