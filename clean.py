@@ -14,16 +14,23 @@ except:
 data = json.load(f)
 
 folders = data['children']
+clean = set()
 
 print("[INFO] Found folders:\n")
+
 for folder in folders:
     try:
         count = len(folder['children'])
+        for bookmark in folder['children']:
+            clean.add(bookmark['uri'])
+            
+        count = str(count) + f", {count - len(clean)} duplicates"
+
     except:
         # If a folder has no items there is no 'children' key
         count = 0
 
     print(f"{folder['title']} [{count}]")
+    clean = set()
 
-
-# print(json.dumps(folders))
+print()
