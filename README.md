@@ -3,7 +3,7 @@
 A small tool written in Python that de-duplicates bookmarks. Currently works with Firefox JSON bookmark export files.
 
 ## To-Do
-+ Nested folder support
++ ~~Nested folder support~~
 + Automatic file location search (default Firefox path)
 + Backup original list function
 + Rust impl?

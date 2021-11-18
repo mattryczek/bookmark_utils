@@ -1,37 +1,59 @@
 import sys, json
 
-filename = str(sys.argv[1])
 
-print(f"\n[OK] Using {filename}")
+INDENT_LEVEL = 3
+INDENT = ' ' * INDENT_LEVEL
 
-try:
-    f = open(filename, encoding='utf8')
-    print("[OK] File read successful")
-except:
-    print("[FATAL] Could not open file")
-    exit()
+def folder_walk(folder, level):
+    count = 0
 
-data = json.load(f)
+    for child in folder['children']:
+        if child['typeCode'] == 1:
+            count = count + 1
 
-folders = data['children']
-clean = set()
+    print(f"{INDENT * level} 📂 {folder['title']} [{count}]")
 
-print("[INFO] Found folders:\n")
-print(f"{filename}:")
+    for child in folder['children']:
+        # if child['typeCode'] == 1:
+        #     print(f"{INDENT * (level + 1)} {child['title']}")
 
-for folder in folders:
+        if child['typeCode'] == 2:
+            folder_walk(child, level + 1)
+
+    return count
+
+
+def main():
+    filename = str(sys.argv[1])
+
+    print(f"\n[OK] Using {filename}")
+
     try:
-        count = len(folder['children'])
-        for bookmark in folder['children']:
-            clean.add(bookmark['uri'])
-
-        count = str(count) + f", {count - len(clean)} duplicates"
-
+        f = open(filename, encoding='utf8')
+        print("[OK] File read successful\n")
     except:
-        # If a folder has no items there is no 'children' key
-        count = 0
+        print("[FATAL] Could not open file")
+        exit()
 
-    print(f"  📂 {folder['title']} [{count}]")
-    clean = set()
+    data = json.load(f)
+    total_bookmarks = 0
+    total_duplicates = 0
+    folders = data['children']
 
-print()
+    print(f"💼 {filename}:")
+
+    for folder in folders:
+        try:
+            total_bookmarks = total_bookmarks + folder_walk(folder, 1)
+
+        except:
+            # If a folder has no items there is no 'children' key
+            pass
+
+    print()
+    print(f"[INFO] File containts {total_bookmarks} total bookmarks")
+    print()
+
+if __name__ == "__main__":
+    main()
+
