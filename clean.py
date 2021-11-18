@@ -17,6 +17,13 @@ folders = data['children']
 
 print("[INFO] Found folders:\n")
 for folder in folders:
-    print(folder['title'])
+    try:
+        count = len(folder['children'])
+    except:
+        # If a folder has no items there is no 'children' key
+        count = 0
+
+    print(f"{folder['title']} [{count}]")
+
 
 # print(json.dumps(folders))
