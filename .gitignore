@@ -127,5 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-bookmarks-2021-11-17.json
-testfile.json
+*.json

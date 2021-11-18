@@ -12,7 +12,7 @@ def folder_walk(folder, level):
         if child['typeCode'] == 1:
             count = count + 1
 
-    print(f"{INDENT * level}📂 {folder['title']} [{count}]")
+    print(f"[{count}]{INDENT * level}📂 {folder['title']}")
 
     for child in folder['children']:
         if child['typeCode'] == 1:
@@ -52,8 +52,8 @@ def main():
             pass
 
     print()
-    print(f"[INFO] File contains {total_bookmarks} total bookmarks")
-    print(f"[INFO] File contains {total_bookmarks - len(TEST)} duplicate bookmarks")
+    print(f"[INFO] Total bookmarks in file: {total_bookmarks}")
+    print(f"[INFO] Duplicate bookmarks: {total_bookmarks - len(TEST)} ({((total_bookmarks - len(TEST))/total_bookmarks * 100):.2f}%)")
     print()
 
 
