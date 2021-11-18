@@ -10,7 +10,7 @@ A small tool written in Python that de-duplicates bookmarks. Currently works wit
 ## Usage
 
 ```
-clean.py <bookmark_file>.json
+python3 clean.py <bookmark_file>.json
 ```
 
 ## Chrome Bookmarks
