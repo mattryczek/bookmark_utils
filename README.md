@@ -21,7 +21,7 @@ python3 clean.py <bookmark_file>.json
 + ~~Backup original list function~~
   + Script preserves original file instead
 + ~~Rust impl?~~
-  + Nah...
+  + Maybe one day
 
 ## Chrome Bookmarks
 Chrome only exports bookmarks in HTML format. There is a workaround however to convert to JSON...
