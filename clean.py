@@ -23,13 +23,9 @@ def folder_walk(folder, level):
 
 def deduplicate(folder):
     try:
-        unique_uris = {each['uri'] : each for each in folder['children']}.values()
+        return {each['uri'] : each for each in folder['children']}.values()
     except:
         pass
-
-    # for item in unique_uris:
-    #     print(json.dumps(item, indent=2))
-
 
 def main():
     filename = str(sys.argv[1])
@@ -52,21 +48,23 @@ def main():
     for folder in folders:
         try:
             total_bookmarks = total_bookmarks + folder_walk(folder, 1)
-            deduplicate(folder)
+            unique_bookmarks = deduplicate(folder)
+
+            folder['children'] = []
+            for item in unique_bookmarks:
+                folder['children'].append(item)
 
         except:
             # If a folder has no items there is no 'children' key
             pass
 
-    
     TREE.reverse()
     for line in TREE:
         print(line)
 
-    print()
-    print(f"[INFO] Total bookmarks in file: {total_bookmarks}")
+    print(f"\n[INFO] Total bookmarks in file: {total_bookmarks}")
     print(f"[INFO] Duplicate bookmarks: {total_bookmarks - len(TEST)} ({((total_bookmarks - len(TEST))/total_bookmarks * 100):.2f}%)")
-    print()
+    print(f"\n[OK] Rebuilt bookmark file with {len(unique_bookmarks)} unique bookmarks")
 
 
 if __name__ == "__main__":
