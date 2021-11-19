@@ -2,11 +2,19 @@
 
 A small tool written in Python that de-duplicates bookmarks. Currently works with Firefox JSON bookmark export files.
 
+## Warning
+
+As of this commit the tool works only on flat bookmark file structures (i.e. all your bookmarks are in the build in "Other Bookmarks" or "Mobile Bookmarks" folder). This message will self destruct once the tool learns how to traverse and prune nested directories.
+
 ## To-Do
-+ ~~Nested folder support~~
++ Support for nested folders (preserve hierarchy)
++ ~~Tree View~~
+  + Done!
 + Automatic file location search (default Firefox path)
-+ Backup original list function
-+ Rust impl?
++ ~~Backup original list function~~
+  + Script will preserve original file
++ ~~Rust impl?~~
+  + Nah...
 
 ## Usage
 
