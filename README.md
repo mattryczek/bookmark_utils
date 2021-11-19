@@ -16,7 +16,8 @@ python3 clean.py <bookmark_file>.json
 + Support for nested folders (preserve hierarchy)
 + ~~Tree View~~
   + Done!
-+ Automatic file location search (default Firefox path)
++ ~~Automatic file location search (default Firefox path)~~
+  + Firefox stores bookmarks in a sqlite database and backups in a custom JSONLZ4 format. Please use the export function to create files to feed the tool.
 + ~~Backup original list function~~
   + Script preserves original file instead
 + ~~Rust impl?~~
