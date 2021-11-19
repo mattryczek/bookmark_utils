@@ -4,6 +4,7 @@ import sys, json
 INDENT_LEVEL = 3
 INDENT = ' ' * INDENT_LEVEL
 TEST = set()
+TREE = []
 
 def folder_walk(folder, level):
     count = 0
@@ -11,18 +12,23 @@ def folder_walk(folder, level):
     for child in folder['children']:
         if child['typeCode'] == 1:
             count = count + 1
-
-    print(f"[{count}]{INDENT * level}📂 {folder['title']}")
-
-    for child in folder['children']:
-        if child['typeCode'] == 1:
             TEST.add(child['uri'])
-        #     print(f"{INDENT * (level + 1)} {child['title']}")
-
-        if child['typeCode'] == 2:
+        else:
             count = count + folder_walk(child, level + 1)
 
+    TREE.append(f"[{count}]{INDENT * level}📂 {folder['title']}")
+
     return count
+
+
+def deduplicate(folder):
+    try:
+        unique_uris = {each['uri'] : each for each in folder['children']}.values()
+    except:
+        pass
+
+    # for item in unique_uris:
+    #     print(json.dumps(item, indent=2))
 
 
 def main():
@@ -46,10 +52,16 @@ def main():
     for folder in folders:
         try:
             total_bookmarks = total_bookmarks + folder_walk(folder, 1)
+            deduplicate(folder)
 
         except:
             # If a folder has no items there is no 'children' key
             pass
+
+    
+    TREE.reverse()
+    for line in TREE:
+        print(line)
 
     print()
     print(f"[INFO] Total bookmarks in file: {total_bookmarks}")
