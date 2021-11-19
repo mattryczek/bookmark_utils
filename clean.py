@@ -66,6 +66,15 @@ def main():
     print(f"[INFO] Duplicate bookmarks: {total_bookmarks - len(TEST)} ({((total_bookmarks - len(TEST))/total_bookmarks * 100):.2f}%)")
     print(f"\n[OK] Rebuilt bookmark file with {len(unique_bookmarks)} unique bookmarks")
 
+    try:
+        with open(f"clean_{filename}", 'w') as outfile:
+            json.dump(data, outfile)
+            print(f"[OK] New bookmark file saved")
+            print()
+    except:
+        print(f"[FATAL] Could not write to outfile")
+        exit()
+
 
 if __name__ == "__main__":
     main()
